@@ -5,92 +5,92 @@
 [![Platform](https://img.shields.io/badge/Platform-Windows-0078D4?style=for-the-badge&logo=windows)](https://github.com/bielsk1/antx)
 [![License](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](https://github.com/bielsk1/antx/blob/main/LICENSE)
 
-Antx is an ultra-resilient, high-performance, native C++ focus blocker and anti-procrastination shield for Windows. Built to end digital distraction at the root level, it actively prevents self-sabotage by combining kernel-like local services, browser-level policy enforcement, and a beautiful, dopamine-free minimalist victory dashboard.
+Antx é um escudo de foco e bloqueador de procrastinação nativo em C++, ultrarresiliente e de alta performance, feito para o Windows. Construído para eliminar a distração pela raiz, ele impede ativamente a autossabotagem combinando serviços locais de baixo nível (kernel-like), bloqueio de DNS nos navegadores e um painel de vitória minimalista, livre de estímulos de dopamina.
 
-Unlike simple browser extensions that can be bypassed in two clicks, **Antx is engineered to be near-impossible to bypass** without entering the strict password you set for yourself.
-
----
-
-## 🌟 Key Features
-
-*   **🛡️ Active Tamper Proofing:** Employs a native Windows Service (`antx_service.exe`) running under the `LocalSystem` account with aggressive auto-recovery watchdogs.
-*   **🚫 Native Window & Process Scanner:** Scans active process windows every 400ms. Instantly terminates browsers (Chrome, Edge, Firefox, Opera, Brave, Vivaldi) attempting to access pre-configured distraction keywords.
-*   **🔒 Secure Anti-Uninstall Lock:** Prevents uninstallation or manual stops of the blocker service. Stopping the service requires a secure SHA-256 hashed password stored safely in the Windows Registry.
-*   **⚙️ Browser DNS-over-HTTPS (DoH) Lock:** Forcefully overrides browser registries to disable DoH at the OS and browser levels, guaranteeing local hosts-file redirection is strictly followed.
-*   **📊 Ultra-Minimal Victory Dashboard:** A sleek, glassmorphic dark-mode interface built using Tailwind CSS that displays only your continuous focus streak (Days, Hours, Minutes, Seconds) and a block counter. No distracting sidebars or menus.
-*   **🔄 Silent Auto-Updater:** The background agent checks the GitHub Releases API every 12 hours. If a new release is pushed, it silently downloads the update and applies it seamlessly using an Inno Setup silent background flag.
+Diferente de extensões de navegador simples que podem ser desativadas com dois cliques, **o Antx foi projetado para ser praticamente impossível de burlar** sem que você digite a senha extrema que configurou para si mesmo.
 
 ---
 
-## 🏗️ Architecture: The 3-Part Shield
+## 🌟 Principais Recursos
 
-Antx is divided into three highly specialized components that communicate seamlessly:
+*   **🛡️ Autodefesa Ativa (Tamper Proofing):** Utiliza um Serviço Nativo do Windows (`antx_service.exe`) rodando na conta `LocalSystem` com mecanismos agressivos de autorrecuperação.
+*   **🚫 Scanner Nativo de Processos:** Analisa ativamente as janelas dos processos a cada 400ms. Encerra instantaneamente navegadores (Chrome, Edge, Firefox, Opera, Brave, Vivaldi) que tentarem acessar as palavras-chave bloqueadas.
+*   **🔒 Bloqueio de Desinstalação:** Impede a desinstalação ou parada manual do serviço. Parar o bloqueador exige uma senha criptografada com hash SHA-256 armazenado com segurança no Registro do Windows.
+*   **⚙️ Bloqueio de DNS-over-HTTPS (DoH):** Altera os registros do Windows e as políticas dos navegadores para forçar a desativação do DoH, garantindo que o arquivo `hosts` local seja estritamente respeitado.
+*   **📊 Painel de Vitória Minimalista:** Uma interface premium em *dark-mode glassmorphic*, construída com Tailwind CSS. Mostra exclusivamente o seu Tempo de Foco Contínuo (Dias, Horas, Minutos e Segundos) e a contagem de tentativas bloqueadas. Sem menus distrativos.
+*   **🔄 Auto-Updater Silencioso:** Um agente em segundo plano checa a API do GitHub a cada 12 horas. Se uma nova versão for publicada, ele faz o download e atualiza o sistema silenciosamente, sem interromper você.
+
+---
+
+## 🏗️ Arquitetura: O Escudo em 3 Partes
+
+O Antx é dividido em três componentes altamente especializados que se comunicam perfeitamente:
 
 ```mermaid
 graph TD
-    A[antx.exe CLI] -->|Configures Registry & Service| B(antx_service.exe)
-    B -->|Enforces Hosts, DoH Policies & Scanner| C[Windows System]
-    D[antx_monitor.exe Agent] -->|Reads Streak & hosts HTTP server| E[Edge App Dashboard]
-    D -->|Self-Updates via GitHub Releases API| F[GitHub API]
-    B -->|Intercepts Distractions| D
+    A[antx.exe CLI] -->|Configura Registro e Serviço| B(antx_service.exe)
+    B -->|Aplica Hosts, Políticas DoH e Scanner| C[Windows System]
+    D[antx_monitor.exe Agent] -->|Lê o Streak e hospeda o Servidor HTTP| E[Painel Edge App]
+    D -->|Atualiza-se via GitHub Releases API| F[GitHub API]
+    B -->|Intercepta Distrações| D
 ```
 
-1.  **`antx.exe` (CLI Controller):** The administrative command-line tool used to install, configure registry passwords, generate random high-security bypass-prevention keys, or securely uninstall the blocker.
-2.  **`antx_service.exe` (The Guard):** A background Windows Service that constantly monitors hosts-file integrity, overrides system and browser DoH protocols, and acts as the low-level scanner that terminates forbidden windows.
-3.  **`antx_monitor.exe` (Dashboard & Update Agent):** A lightweight background agent that runs inside the system tray. It hosts a local lightweight Winsock HTTP server to display your minimalist Focus Streak and handles silent auto-updates.
+1.  **`antx.exe` (Controlador CLI):** A ferramenta de linha de comando usada para instalar, configurar senhas no registro, gerar chaves de alta segurança antissabotagem ou desinstalar o sistema de forma segura.
+2.  **`antx_service.exe` (O Guardião):** Um Serviço do Windows em segundo plano que monitora constantemente a integridade do arquivo `hosts`, sobrepõe os protocolos DoH do sistema e atua como o scanner de baixo nível que encerra janelas proibidas.
+3.  **`antx_monitor.exe` (Painel & Agente de Update):** Um agente super leve que roda na bandeja do sistema (perto do relógio). Ele hospeda um pequeno servidor HTTP local em Winsock para exibir o seu Painel de Foco e gerenciar as atualizações silenciosas automáticas.
 
 ---
 
-## 🚀 Getting Started & Installation
+## 🚀 Como Começar e Instalar
 
-### Option 1: Quick Install (Recommended)
-Simply go to the [Releases](https://github.com/bielsk1/antx/releases) page, download the latest `Antx_Setup.exe` installer, and run it. The installer will package all dependencies, create your desktop/system tray shortcuts, and activate the protection automatically.
+### Opção 1: Instalação Rápida (Recomendado)
+Acesse a página de [Releases](https://github.com/bielsk1/antx/releases), baixe a última versão do instalador `Antx_Setup.exe` e execute. O instalador vai extrair todas as dependências, criar os atalhos e iniciar a proteção automaticamente no seu PC.
 
-### Option 2: Static Compilation from Source
-If you prefer to compile the binaries yourself, ensure you have **GCC/MinGW** installed on your Windows path.
+### Opção 2: Compilação Estática (Do Código-Fonte)
+Se você prefere compilar os binários com suas próprias mãos, garanta que você tem o **GCC/MinGW** instalado e no PATH do Windows.
 
-1.  **Clone the repository:**
+1.  **Clone o repositório:**
     ```bash
     git clone https://github.com/bielsk1/antx.git
     cd antx
     ```
 
-2.  **Compile the components statically:**
+2.  **Compile os componentes estaticamente:**
     ```powershell
-    # Compile the CLI Controller
+    # Compilar o Controlador CLI
     g++ -std=c++17 -O3 -static -static-libgcc -static-libstdc++ src/cli/main.cpp -o build/bin/antx.exe -Isrc/common -lbcrypt -ladvapi32 -lshell32
 
-    # Compile the Guard Service
+    # Compilar o Serviço Guardião
     g++ -std=c++17 -O3 -static -static-libgcc -static-libstdc++ src/service/service.cpp -o build/bin/antx_service.exe -Isrc/common -ladvapi32
 
-    # Compile the UI Monitor and Updater
+    # Compilar o Monitor e Atualizador UI
     g++ -std=c++17 -O3 -static -static-libgcc -static-libstdc++ src/monitor/monitor.cpp src/monitor/updater.cpp -o build/bin/antx_monitor.exe -Isrc/common -lws2_32 -luser32 -ladvapi32 -lpsapi -lshell32 -lwininet -mwindows
     ```
 
-3.  **Run Administrative Installation:**
-    Open PowerShell as **Administrator** inside the `build/bin/` directory and execute:
+3.  **Execute a Instalação como Administrador:**
+    Abra o PowerShell como **Administrador** dentro da pasta `build/bin/` e rode:
     ```powershell
     .\antx.exe install
     ```
-    To lock the blocker with a password:
+    Para trancar a proteção com uma senha e evitar autossabotagem:
     ```powershell
     .\antx.exe set-password
     ```
 
 ---
 
-## 🤖 CI/CD Continuous Delivery (GitHub Actions)
+## 🤖 Entrega Contínua CI/CD (GitHub Actions)
 
-This repository includes a pre-configured automated release workflow inside `.github/workflows/release.yml`. 
+Este repositório já inclui um fluxo de lançamento automatizado no arquivo `.github/workflows/release.yml`. 
 
-When you push a version tag to GitHub:
+Quando você empurra (push) uma nova versão para o GitHub:
 ```bash
 git tag v1.0.0
 git push --tags
 ```
-GitHub Actions will spin up a Windows runner, fetch MinGW, build all three components statically, invoke the **Inno Setup compiler** via `installer.iss`, package the final bundle, and host it as an official Release ready for your users.
+O GitHub Actions liga um servidor Windows na nuvem, instala o MSYS2/MinGW, compila os três arquivos C++ estaticamente, invoca o **Inno Setup compiler** (através do arquivo `installer.iss`), empacota tudo e hospeda publicamente na página de Releases para os seus usuários.
 
 ---
 
-## 📄 License
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+## 📄 Licença
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.
