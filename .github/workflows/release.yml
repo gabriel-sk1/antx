@@ -26,20 +26,41 @@ jobs:
 
       - name: Compile antx (CLI/Installer logic)
         shell: msys2 {0}
-        run: /mingw64/bin/g++ -std=c++17 -O3 -static -static-libgcc -static-libstdc++ src/cli/main.cpp -o build/bin/antx.exe -Isrc/common -lbcrypt -ladvapi32 -lshell32
+        run: |
+          /mingw64/bin/g++ -std=c++17 -O3 -static -static-libgcc -static-libstdc++ src/cli/main.cpp -o build/bin/antx.exe -Isrc/common -lbcrypt -ladvapi32 -lshell32 > build_cli.log 2>&1 || {
+            cat build_cli.log
+            exit 1
+          }
 
       - name: Compile antx_service
         shell: msys2 {0}
-        run: /mingw64/bin/g++ -std=c++17 -O3 -static -static-libgcc -static-libstdc++ src/service/service.cpp -o build/bin/antx_service.exe -Isrc/common -ladvapi32
+        run: |
+          /mingw64/bin/g++ -std=c++17 -O3 -static -static-libgcc -static-libstdc++ src/service/service.cpp -o build/bin/antx_service.exe -Isrc/common -ladvapi32 > build_service.log 2>&1 || {
+            cat build_service.log
+            exit 1
+          }
 
       - name: Compile antx_monitor
         shell: msys2 {0}
-        run: /mingw64/bin/g++ -std=c++17 -O3 -static -static-libgcc -static-libstdc++ src/monitor/monitor.cpp src/monitor/updater.cpp -o build/bin/antx_monitor.exe -Isrc/common -lws2_32 -luser32 -ladvapi32 -lpsapi -lshell32 -lwininet -mwindows
+        run: |
+          /mingw64/bin/g++ -std=c++17 -O3 -static -static-libgcc -static-libstdc++ src/monitor/monitor.cpp src/monitor/updater.cpp -o build/bin/antx_monitor.exe -Isrc/common -lws2_32 -luser32 -ladvapi32 -lpsapi -lshell32 -lwininet -mwindows > build_monitor.log 2>&1 || {
+            cat build_monitor.log
+            exit 1
+          }
 
       - name: Compile Inno Setup Installer
         run: |
-          # The windows-latest runner comes with Inno Setup pre-installed at this path
           "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss
+
+      - name: Upload Logs on Failure
+        if: failure()
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-logs
+          path: |
+            build_cli.log
+            build_service.log
+            build_monitor.log
 
       - name: Release to GitHub
         uses: softprops/action-gh-release@v1
