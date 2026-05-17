@@ -1,4 +1,7 @@
-﻿#include <windows.h>
+#ifndef _WIN32_WINNT
+#define _WIN32_WINNT 0x0A00
+#endif
+#include <windows.h>
 #include <bcrypt.h>
 #include <iostream>
 #include <string>
