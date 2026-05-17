@@ -26,15 +26,15 @@ jobs:
 
       - name: Compile antx (CLI/Installer logic)
         shell: msys2 {0}
-        run: g++ -std=c++17 -O3 -static -static-libgcc -static-libstdc++ src/cli/main.cpp -o build/bin/antx.exe -Isrc/common -lbcrypt -ladvapi32 -lshell32
+        run: /mingw64/bin/g++ -std=c++17 -O3 -static -static-libgcc -static-libstdc++ src/cli/main.cpp -o build/bin/antx.exe -Isrc/common -lbcrypt -ladvapi32 -lshell32
 
       - name: Compile antx_service
         shell: msys2 {0}
-        run: g++ -std=c++17 -O3 -static -static-libgcc -static-libstdc++ src/service/service.cpp -o build/bin/antx_service.exe -Isrc/common -ladvapi32
+        run: /mingw64/bin/g++ -std=c++17 -O3 -static -static-libgcc -static-libstdc++ src/service/service.cpp -o build/bin/antx_service.exe -Isrc/common -ladvapi32
 
       - name: Compile antx_monitor
         shell: msys2 {0}
-        run: g++ -std=c++17 -O3 -static -static-libgcc -static-libstdc++ src/monitor/monitor.cpp src/monitor/updater.cpp -o build/bin/antx_monitor.exe -Isrc/common -lws2_32 -luser32 -ladvapi32 -lpsapi -lshell32 -lwininet -mwindows
+        run: /mingw64/bin/g++ -std=c++17 -O3 -static -static-libgcc -static-libstdc++ src/monitor/monitor.cpp src/monitor/updater.cpp -o build/bin/antx_monitor.exe -Isrc/common -lws2_32 -luser32 -ladvapi32 -lpsapi -lshell32 -lwininet -mwindows
 
       - name: Compile Inno Setup Installer
         run: |
