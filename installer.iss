@@ -1,3 +1,5 @@
+#define MyAppVersion "1.0.0"
+
 [Setup]
 AppName=Antx Blocker
 AppVersion={#MyAppVersion}
