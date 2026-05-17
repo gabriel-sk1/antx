@@ -33,6 +33,7 @@ jobs:
           cl.exe /EHsc /O2 /MT src/monitor/monitor.cpp src/monitor/updater.cpp /Isrc/common /Fe:build\bin\antx_monitor.exe ws2_32.lib user32.lib advapi32.lib psapi.lib shell32.lib wininet.lib /link /SUBSYSTEM:WINDOWS > build_monitor.log 2>&1
 
       - name: Compile Inno Setup Installer
+        shell: cmd
         run: |
           "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss
 
