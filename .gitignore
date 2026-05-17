@@ -43,3 +43,7 @@ desktop.ini
 update_ui.py
 clean.py
 clean.ps1
+build-logs.zip
+build-logs-2.zip
+/build-logs
+/build-logs-2   
