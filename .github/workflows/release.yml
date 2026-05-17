@@ -17,19 +17,20 @@ jobs:
         uses: ilammy/msvc-dev-cmd@v1
 
       - name: Create Build Directory
-        run: mkdir -p build/bin
+        run: |
+          if (!(Test-Path build\bin)) { New-Item -ItemType Directory -Path build\bin -Force }
 
       - name: Compile antx (CLI/Installer logic)
         run: |
-          cl.exe /EHsc /O2 /MT src/cli/main.cpp /Isrc/common /febuild/bin/antx.exe bcrypt.lib advapi32.lib shell32.lib
+          cl.exe /EHsc /O2 /MT src/cli/main.cpp /Isrc/common /fe:build\bin\antx.exe bcrypt.lib advapi32.lib shell32.lib
 
       - name: Compile antx_service
         run: |
-          cl.exe /EHsc /O2 /MT src/service/service.cpp /Isrc/common /febuild/bin/antx_service.exe advapi32.lib
+          cl.exe /EHsc /O2 /MT src/service/service.cpp /Isrc/common /fe:build\bin\antx_service.exe advapi32.lib
 
       - name: Compile antx_monitor
         run: |
-          cl.exe /EHsc /O2 /MT src/monitor/monitor.cpp src/monitor/updater.cpp /Isrc/common /febuild/bin/antx_monitor.exe ws2_32.lib user32.lib advapi32.lib psapi.lib shell32.lib wininet.lib /link /SUBSYSTEM:WINDOWS
+          cl.exe /EHsc /O2 /MT src/monitor/monitor.cpp src/monitor/updater.cpp /Isrc/common /fe:build\bin\antx_monitor.exe ws2_32.lib user32.lib advapi32.lib psapi.lib shell32.lib wininet.lib /link /SUBSYSTEM:WINDOWS
 
       - name: Compile Inno Setup Installer
         run: |
