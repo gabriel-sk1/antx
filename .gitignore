@@ -1,0 +1,45 @@
+# Compilação e Binários (Ignora executáveis e saídas de build)
+*.exe
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.so
+*.dylib
+
+# Diretórios de Build e CMake
+build/
+bin/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.cmake
+
+# Configurações de IDEs (VS Code, Visual Studio, etc.)
+.vscode/
+.vs/
+*.suo
+*.user
+*.userossc
+*.sln
+*.vcxproj
+*.filters
+
+# Arquivos de Dados e Cache Locais
+*.dat
+*.log
+*.tmp
+streak.dat
+C:/ProgramData/Antx/
+
+# Arquivos do Sistema
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Outros arquivos
+update_ui.py
+clean.py
+clean.ps1
